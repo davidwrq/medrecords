@@ -20,6 +20,3 @@ class HomeViewListView(LoginRequiredMixin, ListView):
         context.update({'users_count': User.objects.all().count()})
 
         return context
-
-
-

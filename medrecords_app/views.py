@@ -1,11 +1,10 @@
 from django.contrib.auth import get_user_model
-
-from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, FormView
 
-from django.views.generic import ListView
+from medrecords_app.models import MedicalRecord
+from medrecords_app.forms import MedicalRecordCreationForm
 
-from django.contrib.auth.models import User
 
 User = get_user_model()
 
@@ -20,3 +19,14 @@ class HomeViewListView(LoginRequiredMixin, ListView):
         context.update({'users_count': User.objects.all().count()})
 
         return context
+
+class MedicalRecordCreateView(LoginRequiredMixin, FormView):
+    template_name = "pages/medical_record_form.html"
+    form_class = MedicalRecordCreationForm
+
+
+class MedicalRecordView(LoginRequiredMixin, ListView):
+    template_name = "pages/medical_records.html"
+    paginate_by = 1
+    queryset =  MedicalRecord.objects.all()
+

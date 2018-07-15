@@ -1,16 +1,10 @@
+from django.conf.urls import url
 from django.urls import path
 
-from medrecords.medrecords_app.views import (
-    user_list_view,
-    user_redirect_view,
-    user_update_view,
-    user_detail_view,
-)
+from medrecords_app.views import MedicalRecordView, MedicalRecordCreateView
 
-app_name = "users"
+app_name = "medrecords_app"
 urlpatterns = [
-    path("", view=user_list_view, name="list"),
-    path("~redirect/", view=user_redirect_view, name="redirect"),
-    path("~update/", view=user_update_view, name="update"),
-    path("<str:username>/", view=user_detail_view, name="detail"),
+    url("", MedicalRecordView.as_view(), name="medical_record"),
+    url("record_create/", MedicalRecordCreateView.as_view(), name="medrecord_form"),
 ]

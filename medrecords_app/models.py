@@ -20,6 +20,8 @@ class Medicine(TimeStampedModel):
     type_medicine = models.CharField(
         max_length=255, verbose_name='tipo de medicina', choices=MEDICINE_TYPE,  blank=True)
 
+    def __str__(self):
+        return self.name
 
 class Exam(TimeStampedModel):
     patient = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -27,6 +29,8 @@ class Exam(TimeStampedModel):
     name = models.CharField('Nombre examen', max_length=255)
     description = models.TextField('Descripción examen', blank=True)
 
+    def __str__(self):
+        return "{}-{}".format(self.patient, self.code)
 
 class MedicalRecord(TimeStampedModel):
     patient = models.ForeignKey(User, on_delete=models.CASCADE)

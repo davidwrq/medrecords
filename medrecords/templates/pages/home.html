@@ -59,13 +59,11 @@
               <tbody>
                 {% for user in object_list %}
                 <tr>
-
                     <td>{{ user.email }} </td>
                     <td>{{ user.username }} </td>
                 {% empty %}
                     <li>No users yet.</li>
                   </tr>
-
                 {% endfor %}
               </tbody>
             </table>

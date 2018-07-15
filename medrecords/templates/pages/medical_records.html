@@ -63,20 +63,51 @@
                       <td>{{ record.patient }} </td>
                       <td>{{ record.height }} </td>
                       <td>{{ record.weight }} </td>
+                      <td>
+                      <a href="{% url 'medrecords:medrecord_update' pk=record.pk %}">
+                        <button type="button" class="btn btn-success">
+                          <i class="mdi mdi-cloud-download"></i>Editar</button>
+                      </a>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleterecord">
+                          Eliminar
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleterecord" tabindex="-1" role="dialog" aria-labelledby="deleterecordLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="deleterecordLabel">Eliminar ficha</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                ¿Quiere eliminar la ficha del paciente {{record.patient}}?
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <form method="post" action="{% url 'medrecords:medrecord_delete' pk=record.pk %}">{% csrf_token %}
+                                    <input type="submit" class="btn btn-primary" value="Confirmar" />
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </td>
                   {% empty %}
-                      <li>No record yet.</li>
+                      <li>Aun no hay fichas ingresadas al sistema.</li>
                     </tr>
-
                   {% endfor %}
                 </tbody>
               </table>
             </div>
             <div class="d-flex align-items-center justify-content-between flex-wrap">
-              <p class="mb-0">
-                  <a class="btn btn-primary" href="{% url 'medrecords:medrecord_form' %}" role="button">Agregar Ficha</a></p>
+              <a class="btn btn-primary"  href="{% url 'medrecords:medrecord_form' %}" role="button">Agregar Ficha</a>
+
               <nav>
                 <ul class="pagination rounded-separated pagination-info mt-3">
-                    {% if page_obj.has_previous %}
+                  {% if page_obj.has_previous %}
                   <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"><i class="mdi mdi-chevron-left"></i></a></li>
                   {% endif %}
 

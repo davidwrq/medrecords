@@ -6,11 +6,10 @@ from core.models import TimeStampedModel
 User = get_user_model()
 
 MEDICINE_TYPE = (
-    ('', ''),
-    (1, 'Analgésico'),
-    (2, 'Antidepresivos'),
-    (3, 'Hormonas'),
-    (4, 'Antibioticos'),
+    ('1', 'Analgésico'),
+    ('2', 'Antidepresivos'),
+    ('3', 'Hormonas'),
+    ('4', 'Antibioticos'),
 )
 
 class Medicine(TimeStampedModel):

@@ -15,6 +15,11 @@ class HomeViewListView(LoginRequiredMixin, ListView):
     paginate_by = 5
     queryset = User.objects.all().exclude(is_superuser=True)
 
+    def get(self, *args, **kwargs):
+        if self.request.user.user_type == '2':
+             return redirect(reverse_lazy("medrecords:medical_record"))
+        return super(HomeViewListView, self).get(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(HomeViewListView, self).get_context_data(**kwargs)
         context.update({'users_count': User.objects.all().exclude(is_superuser=True).count(),

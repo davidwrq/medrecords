@@ -9,9 +9,26 @@
         <div class="row">
             <div class="col-lg-12 grid-margin">
 
-      <h2>{{ object.username }}</h2>
-      {% if object.name %}
-        <p>{{ object.name }}</p>
+      <h2>Nombre</h2>
+      {% if object.first_name %}
+        <p>{{ object.first_name }}</p>
+      {% endif %}
+
+
+
+      <h2>Apellido</h2>
+      {% if object.last_name %}
+        <p>{{ object.last_name }}</p>
+      {% endif %}
+
+      <h2>E-mail</h2>
+      {% if object.email %}
+        <p>{{ object.email }}</p>
+      {% endif %}
+
+      <h2>Tipo</h2>
+      {% if object.user_type %}
+        <p>{{ object.get_user_type_display }}</p>
       {% endif %}
 
 

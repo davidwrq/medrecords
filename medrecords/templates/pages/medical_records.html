@@ -71,9 +71,9 @@
                           <i class="mdi mdi-tooltip-edit"></i>Editar</button>
                       </a>
                       <!-- Ver ficha -->
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewrecord">
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewrecord_{{record.pk}}">
                         Ver Ficha</button>
-                        <div class="modal fade" id="viewrecord" tabindex="-1" role="dialog" aria-labelledby="viewrecordLabel" aria-hidden="true">
+                        <div class="modal fade" id="viewrecord_{{record.pk}}" tabindex="-1" role="dialog" aria-labelledby="viewrecordLabel" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -95,11 +95,11 @@
                           </div>
                         </div>
                       <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleterecord">
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleterecord_{{record.pk}}">
                           Eliminar
                         </button>
                         <!-- Modal -->
-                        <div class="modal fade" id="deleterecord" tabindex="-1" role="dialog" aria-labelledby="deleterecordLabel" aria-hidden="true">
+                        <div class="modal fade" id="deleterecord_{{record.pk}}" tabindex="-1" role="dialog" aria-labelledby="deleterecordLabel" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -129,7 +129,7 @@
               </table>
             </div>
             <div class="d-flex align-items-center justify-content-between flex-wrap">
-                {% if request.user.type_user == 1 %}
+                {% if request.user.user_type == '1' %}
               <a class="btn btn-primary"  href="{% url 'medrecords:medrecord_form' %}" role="button">Agregar Ficha</a>
               {% endif %}
               <nav>

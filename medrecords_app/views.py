@@ -9,18 +9,11 @@ from medrecords_app.forms import MedicalRecordCreationForm
 
 User = get_user_model()
 
+
 class HomeViewListView(LoginRequiredMixin, ListView):
     template_name = "pages/home.html"
     paginate_by = 5
     queryset = User.objects.all().exclude(is_superuser=True)
-
-    def get(self, *args, **kwargs):
-        if self.request.user.user_type == 1:
-             return redirect('home')
-        else:
-            return redirect(reverse_lazy("medrecords:medical_record"))
-
-        return super(HomeViewListView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(HomeViewListView, self).get_context_data(**kwargs)
@@ -30,14 +23,17 @@ class HomeViewListView(LoginRequiredMixin, ListView):
 
         return context
 
+
 class MedicalRecordView(LoginRequiredMixin, ListView):
     template_name = "pages/medical_records.html"
     paginate_by = 5
     model = MedicalRecord
-    queryset =  MedicalRecord.objects.all()
 
     def get_queryset(self):
-        return self.model.objects.filter(patient=self.request.user)
+        if self.request.user.user_type == '1':
+            return self.model.objects.all()
+        else:
+            return self.model.objects.filter(patient=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super(MedicalRecordView, self).get_context_data(**kwargs)
@@ -48,6 +44,7 @@ class MedicalRecordView(LoginRequiredMixin, ListView):
 
         return context
 
+
 class MedicalRecordCreateView(LoginRequiredMixin, FormView):
     template_name = "pages/medical_record_form.html"
     form_class = MedicalRecordCreationForm
@@ -56,6 +53,7 @@ class MedicalRecordCreateView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
 
 class MedicalRecordUpdate(LoginRequiredMixin, UpdateView):
     template_name = "pages/medicalrecord_update_form.html"

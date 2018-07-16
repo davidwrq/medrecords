@@ -23,7 +23,7 @@
                 <i class="icon-umbrella icons"></i>
               </div>
               <div class="wrapper text-wrapper">
-                <p class="text-dark">6521</p>
+                <p class="text-dark">{{patient_count}}</p>
                 <p>Pacientes</p>
               </div>
             </div>
@@ -32,7 +32,7 @@
                 <i class="icon-check icons"></i>
               </div>
               <div class="wrapper text-wrapper">
-                <p class="text-dark">325</p>
+                <p class="text-dark">{{doctor_count}}</p>
                 <p>Medicos</p>
               </div>
             </div>
@@ -52,17 +52,24 @@
             <table class="table table-striped">
               <thead>
                 <tr>
+                  <th>rut</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
                   <th>Email</th>
-                  <th>username</th>
+                  <th>Tipo</th>
                 </tr>
               </thead>
               <tbody>
                 {% for user in object_list %}
                 <tr>
+                    <td>{{ user.rut }} </td>
+                    <td>{{ user.first_name }} </td>
+                    <td>{{ user.last_name }} </td>
                     <td>{{ user.email }} </td>
-                    <td>{{ user.username }} </td>
+                    <td>{{ user.get_user_type_display }} </td>
+
                 {% empty %}
-                    <li>No users yet.</li>
+                    <li>No se han agregados usuarios aún.</li>
                   </tr>
                 {% endfor %}
               </tbody>

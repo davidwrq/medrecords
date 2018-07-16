@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 USER_TYPES = (
-    ('1', 'Doctor'),
+    ('1', 'Medico'),
     ('2', 'Paciente'),
 )
 class User(AbstractUser):

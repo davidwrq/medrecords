@@ -14,7 +14,7 @@
                 <i class="icon-rocket icons"></i>
               </div>
               <div class="wrapper text-wrapper">
-                <p class="text-dark"></p>
+                <p class="text-dark">{{users_count}}</p>
                 <p>Usuarios</p>
               </div>
             </div>
@@ -23,7 +23,7 @@
                 <i class="icon-umbrella icons"></i>
               </div>
               <div class="wrapper text-wrapper">
-                <p class="text-dark">6521</p>
+                <p class="text-dark">{{patient_count}}</p>
                 <p>Pacientes</p>
               </div>
             </div>
@@ -32,7 +32,7 @@
                 <i class="icon-check icons"></i>
               </div>
               <div class="wrapper text-wrapper">
-                <p class="text-dark">325</p>
+                <p class="text-dark">{{doctor_count}}</p>
                 <p>Medicos</p>
               </div>
             </div>
@@ -47,7 +47,7 @@
       <div class="col-lg-12 grid-margin">
         <div class="card">
           <div class="card-body">
-            <h2 class="card-title">Usuarios</h2>
+            <h2 class="card-title">Fichas medicas</h2>
             <div class="table-responsive">
               <table class="table table-striped">
                 <thead>
@@ -66,7 +66,7 @@
                       <td>
                       <a href="{% url 'medrecords:medrecord_update' pk=record.pk %}">
                         <button type="button" class="btn btn-success">
-                          <i class="mdi mdi-cloud-download"></i>Editar</button>
+                          <i class="mdi mdi-tooltip-edit"></i>Editar</button>
                       </a>
                       <!-- Button trigger modal -->
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleterecord">
@@ -111,8 +111,7 @@
                   <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"><i class="mdi mdi-chevron-left"></i></a></li>
                   {% endif %}
 
-                  <li class="page-item active"><a class="page-link" href="#"> Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-                    </a></li>
+                  <li class="page-item active"><a class="page-link" href="#"> Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
 
                   {% if page_obj.has_next %}
                   <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="mdi mdi-chevron-right"></i></a></li>

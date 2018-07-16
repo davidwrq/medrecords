@@ -34,8 +34,8 @@ class Exam(TimeStampedModel):
 
 class MedicalRecord(TimeStampedModel):
     patient = models.ForeignKey(User, on_delete=models.CASCADE)
-    height =  models.IntegerField()
-    weight = models.IntegerField()
+    height =  models.FloatField('Altura', null=True, blank=True)
+    weight = models.IntegerField(verbose_name='Peso')
     observations = models.TextField('observaciones', blank=True)
     exams = models.ManyToManyField(Exam, blank=True )
     medicines = models.ManyToManyField(Medicine, blank=True)

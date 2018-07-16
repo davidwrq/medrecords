@@ -11,20 +11,29 @@ User = get_user_model()
 
 class HomeViewListView(LoginRequiredMixin, ListView):
     template_name = "pages/home.html"
-    paginate_by = 1
-    queryset = User.objects.all()
+    paginate_by = 5
+    queryset = User.objects.all().exclude(is_superuser=True)
 
     def get_context_data(self, **kwargs):
         context = super(HomeViewListView, self).get_context_data(**kwargs)
-        context.update({'users_count': User.objects.all().count()})
+        context.update({'users_count': User.objects.all().exclude(is_superuser=True).count(),
+                        'doctor_count':User.objects.filter(user_type=1).count(),
+                        'patient_count':User.objects.filter(user_type=2).count()})
 
         return context
 
 class MedicalRecordView(LoginRequiredMixin, ListView):
     template_name = "pages/medical_records.html"
-    paginate_by = 1
+    paginate_by = 5
     queryset =  MedicalRecord.objects.all()
 
+    def get_context_data(self, **kwargs):
+        context = super(MedicalRecordView, self).get_context_data(**kwargs)
+        context.update({'users_count': User.objects.all().exclude(is_superuser=True).count(),
+                        'doctor_count':User.objects.filter(user_type=1).count(),
+                        'patient_count':User.objects.filter(user_type=2).count()})
+
+        return context
 
 class MedicalRecordCreateView(LoginRequiredMixin, FormView):
     template_name = "pages/medical_record_form.html"
@@ -39,7 +48,7 @@ class MedicalRecordCreateView(LoginRequiredMixin, FormView):
 class MedicalRecordUpdate(LoginRequiredMixin, UpdateView):
     template_name = "pages/medicalrecord_update_form.html"
     model = MedicalRecord
-    fields = ['patient', 'height', 'weight', 'observations', 'exams', 'medicines']
+    form_class = MedicalRecordCreationForm
     template_name_suffix = '_update_form'
     success_url = reverse_lazy("medrecords:medical_record")
 

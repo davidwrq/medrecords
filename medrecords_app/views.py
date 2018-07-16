@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-
 from django.views.generic import ListView, FormView, UpdateView, DeleteView
+from django.shortcuts import redirect
 
 from medrecords_app.models import MedicalRecord
 from medrecords_app.forms import MedicalRecordCreationForm
@@ -13,6 +13,14 @@ class HomeViewListView(LoginRequiredMixin, ListView):
     template_name = "pages/home.html"
     paginate_by = 5
     queryset = User.objects.all().exclude(is_superuser=True)
+
+    def get(self, *args, **kwargs):
+        if self.request.user.user_type == 1:
+             return redirect('home')
+        else:
+            return redirect(reverse_lazy("medrecords:medical_record"))
+
+        return super(HomeViewListView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(HomeViewListView, self).get_context_data(**kwargs)
@@ -25,10 +33,15 @@ class HomeViewListView(LoginRequiredMixin, ListView):
 class MedicalRecordView(LoginRequiredMixin, ListView):
     template_name = "pages/medical_records.html"
     paginate_by = 5
+    model = MedicalRecord
     queryset =  MedicalRecord.objects.all()
+
+    def get_queryset(self):
+        return self.model.objects.filter(patient=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super(MedicalRecordView, self).get_context_data(**kwargs)
+
         context.update({'users_count': User.objects.all().exclude(is_superuser=True).count(),
                         'doctor_count':User.objects.filter(user_type=1).count(),
                         'patient_count':User.objects.filter(user_type=2).count()})
@@ -43,7 +56,6 @@ class MedicalRecordCreateView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
-
 
 class MedicalRecordUpdate(LoginRequiredMixin, UpdateView):
     template_name = "pages/medicalrecord_update_form.html"

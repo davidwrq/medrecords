@@ -89,12 +89,16 @@
                 <li class="nav-item nav-category">
                   <span class="nav-link">GENERAL</span>
                 </li>
+
+                {% if request.user.user_type == '1' %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'home' %}">
                         <span class="menu-title">Dashboard</span>
                     <i class="icon-speedometer menu-icon"></i>
                   </a>
                 </li>
+                {% endif %}
+
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'medrecords:medical_record' %}">
                     <span class="menu-title">Fichas medicas</span>
